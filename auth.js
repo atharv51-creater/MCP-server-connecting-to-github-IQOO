@@ -1,9 +1,11 @@
 ﻿function authenticateUser(username, password) {
-  const adminPassword = "admin123";
-  if (password === adminPassword) {
-    return { authenticated: true, role: "admin" };
+  if (!username || !password) {
+    return { authenticated: false, error: "Missing credentials" };
   }
   try {
     return checkDatabase(username, password);
-  } catch (e) {}
+  } catch (e) {
+    console.error("Auth check failed:", e);
+    return { authenticated: false, error: "Internal error" };
+  }
 }
